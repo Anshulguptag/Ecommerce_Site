@@ -1,86 +1,61 @@
 <!DOCTYPE html>
-<?php
-include("functions/functions.php") ?>
+<?php include("functions/functions.php") ?>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Shopping Mart</title>
-
-    <link rel="stylesheet" href="styles/style.css" media="all" />
-  </head>
-  <body>
-    <!--Main Container starts here-->
-    <div class="main_wrapper">
-
-      <!--Header starts here-->
-      <div class="header_wrapper">
-        <img id="logo" src="images/logo.jpg"/>
-        <img id="banner" src="images/iphonex.gif"/>
-      </div>
-      <!--Header ends here-->
-
-      <!--Navbar starts here-->
-      <div class="menubar">
-        <ul id="menu">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="all_products.php">All Products</a></li>
-          <li><a href="custmor/my_account.php">My Account</a></li>
-          <li><a href="#">Sign Up</a></li>
-          <li><a href="cart.php">Shopping cart</a></li>
-          <li><a href="#">Contact us</a></li>
+<head>
+  <title>fullcart</title>
+  <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css" media="all" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Handlee" rel="stylesheet">
+  
+</head>
+<body>
+  <div class="header">
+        <ul id="head">  
+          <li><a href="index.php">JOIN</a></li>
+          <li><a href="all_products.php">SIGNIN</a></li>
+          <li><a href="custmor/my_account.php">MAIL</a></li>
+          <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
+          <a href="#">
+          <span class="glyphicon glyphicon-shopping-cart"><?php total_items(); ?></span>
+          </a>
         </ul>
-
-        <div id="form">
+<hr>
+<h1 id="logo">fullcart.com</h1>
+<div id="form">
           <form method="get" action="results.php" enctype="multipart/form-data">
-            <input type="text" name="user_query" placeholder="Search a product"/>
-            <input type="submit" name="search" value="search"/>
+            <input type="text" name="user_query" placeholder="Search a product" style="float: right; margin-right: 10px;"/>
+            <input type="submit" name="search" value="search" style="float: right; margin-right: 5px; margin-left: -300px;"/>
           </form>
+      </div>      
+  <div class="menubar">
+    
+    <ul id="menu">
+      <li><div class="dropdown" style="margin-left: 150px;">
+        <button class="dropbtn"><a href="index.php" style="text-decoration: none; color:black;" >HOME</a></button>
+        
       </div>
-    </div>
-      <!--Navbar ends here-->
-
-      <!--Content wrapper starts here-->
-      <div class="content_wrapper">
-        <div id="sidebar">
-          <div id="sidebar_title">Categories</div>
-          <ul id="cats">
-            <!--
-            <li><a href="#">Laptops</a></li>
-            <li><a href="#">Computers</a></li>
-            <li><a href="#">Mobiles</a></li>
-            <li><a href="#">Cameras</a></li>
-            <li><a href="#">iPads</a></li>
-          -->
-          <?php getCats(); ?>
-
-          </ul>
-
-          <div id="sidebar_title">Brands</div>
-          <ul id="cats">
-            <!--
-            <li><a href="#">HP</a></li>
-            <li><a href="#">DELL</a></li>
-            <li><a href="#">APPLE</a></li>
-            <li><a href="#">MOTOROLA</a></li>
-            <li><a href="#">LG</a></li>
-          -->
-          <?php getBrands(); ?>
-
-          </ul>
-
+      </li>
+      <li><div class="dropdown" style="margin-left: 15px;">
+        <button class="dropbtn"><a href="all_products.php" style="text-decoration: none; color:black;">ALL</a></button>
+        <div class="dropdown-content">
+          <!--<?php getCats(); ?>-->
         </div>
-        <div id="content_area">
-          <?php cart('all_products') ?>
-          <div id="shopping_cart">
-            <span style="float:right; font-size:18px; padding:5px; line-height: 40px; ">Welcome Guest!
-              <b style="color:yellow">Shopping Cart- </b>Total items:  Total Price: <a href="cart.php" style="color:lightgreen">Go to Cart</a>
-            </span>
-
-          </div>
-
-            <div id="products_box">
-
-            <?php
+      </div>
+      </li>
+      <?php indigetCats(); ?>
+      
+    </ul>
+  </div>
+  <br>
+  <div class="header_wrapper">
+        <img id="banner" src="images/advertisement.gif"/>
+     </div> 
+     <?php
                 $get_pro = "select * from products";
 
                 $run_pro = mysqli_query($con, $get_pro);
@@ -95,27 +70,35 @@ include("functions/functions.php") ?>
 
                    echo "
                       <div id='single_product'>
-                        <h3>$pro_title</h3>
-                        <img src='admin_area/product_images/$pro_image' width='180' height='180' />
-                        <h3>₹ $pro_price</h3>
-                        <a href='details.php?pro_id=$pro_id' style='float:left;'>Details</a>
-                        <a href='all_products.php?add_cart=$pro_id'><button style='float: right'>Add to Cart</button></a>
-                        </div>
+              <h3>$pro_title</h3>
+              <img src='admin_area/product_images/$pro_image' width='300' height='300' />
+              <h3>₹ $pro_price</h3>
+              <a href='details.php?add_cart=$pro_id' style='float:left;'>Details</a>
+              <a href='all_products.php?add_cart=$pro_id&cond=yes'>
+              <button type='button' class='btn'>
+          <span class='glyphicon glyphicon-shopping-cart'></span> Add to Cart
+        </button>
+        </a>
+      </div>
                    ";
                 }
             ?>
-        </div>
+        <?php if(isset($_GET['cond']))
+     {
+      cart('all_products',$_GET['cond']);  
+     }
+      ?>    
+       <div id="footer">
+        <h2 style="text-align: center; padding-top: 30px; font-size:20px; ">FOLLOW US ON</h2>
+        <a href="#" class="fa fa-facebook"></a>
+        <a href="#" class="fa fa-twitter"></a>
+        <a href="#" class="fa fa-google"></a>
+    <a href="#" class="fa fa-linkedin"></a>
+    <a href="#" class="fa fa-instagram"></a>
+    
+    <h2 style="text-align: center; padding-top: 30px; font-size:20px; ">&copy; 2018 fullcart</h2>
+    <h4 style="text-align: center; font-size:20px; ">fullcart.com</h4>
+        
       </div>
-    </div>
-      <!--Contet wrapper ends here-->
-
-      <div id="footer">
-        <h2 style="text-align: center; padding-top: 30px;">&copy; 2018 by www.eezykart.com</h2>
-      </div>
-
-
-
-    </div>
-    <!--Main Containers End here-->
-  </body>
+</body>
 </html>

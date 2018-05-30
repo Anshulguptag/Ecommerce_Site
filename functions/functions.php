@@ -1,12 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <title>India Mart</title>
+  <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css" media="all" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Handlee" rel="stylesheet">
+  
+</head>
+<body>
 <?php
-
 $con = mysqli_connect("localhost","root","Anshul@13","ecommerce");
-
 if(mysqli_connect_errno())
 {
   echo "Failed to connect to MySQL: ".mysqli_connect_errno();
 }
-
 function getIp()
 {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -18,10 +31,12 @@ function getIp()
       }
       return $ip;
 }
-function cart($request)
+function cart($request,$cond)
 {
-  if(isset($_GET['add_cart']))
-  {
+  if($cond=='yes')
+   {
+    if(isset($_GET['add_cart']))
+    {
       global $con;
        $pro_id = $_GET['add_cart'];
        $ip = getIp();
@@ -34,8 +49,9 @@ function cart($request)
             $temp = $row['qty']+1;
             $update_quant = "update cart set qty = '$temp' where ip_add='$ip' AND p_id='$pro_id'";
             mysqli_query($con, $update_quant);
-
+            
         }
+        echo"<script>window.open('$request.php?add_cart=$pro_id&cond=No','_self')</script>";
        }
 
       else{
@@ -43,36 +59,66 @@ function cart($request)
         $run_pro = mysqli_query($con, $insert_pro);
         echo $run_pro;
         if($run_pro)
-        {
-        echo "<script>alert('Product Insert Successfully!')</script>";
-        echo"<script>window.open('$request.php','_self')</script>";
-
-      }
-      }
-
+          {
+            //echo "<script>alert('Product Insert Successfully!')</script>";
+            echo"<script>window.open('$request.php?add_cart=$pro_id&cond=No','_self')</script>";
+          }
+        }
+    }
   }
-
 }
 
 
-/*function total_items(){
+function total_items(){
+  global $con;
+  $total_items=0;
   if(isset($_GET['add_cart'])){
-    global $con;
     $ip=getIp();
-    $get_items = "select * from cart where ip_add='$ip'";
+    $get_items = "select qty from cart where ip_add='$ip'";
     $run_items = mysqli_query($con, $get_items);
-    $count_items = mysqli_num_rows($run_items);
+    while($row_items_pro=mysqli_fetch_array($run_items)){
+        $total_items+=$row_items_pro['qty'];
+
+     } 
+    //$count_items = mysqli_num_rows($run_items);
   }
     else{
       $ip=getIp();
-      $get_items = "select * from cart where ip_add='$ip'";
+      $get_items = "select qty from cart where ip_add='$ip'";
       $run_items = mysqli_query($con, $get_items);
-      $count_items = mysqli_num_rows($run_items);
+      while($row_items_pro=mysqli_fetch_array($run_items)){
+        $total_items+=$row_items_pro['qty'];
 
+     } 
+    
     }
-    echo $count_items;
+    echo $total_items;
 
-}*/
+}
+
+function total_price(){
+$total=0;
+global $con;
+$ip = getIp();
+$sel_price = "select * from cart where ip_add='$ip'";
+$run_price = mysqli_query($con, $sel_price);
+while($p_price=mysqli_fetch_array($run_price))
+{
+  $pro_id = $p_price['p_id'];
+  $qty = $p_price['qty'];
+  $pro_price = "select * from products where product_id='$pro_id'";
+  $run_pro_price = mysqli_query($con, $pro_price);
+
+  while($pp_price = mysqli_fetch_array($run_pro_price))
+  {
+    $product_price = array($pp_price['product_price']*$qty);
+    $values = array_sum($product_price);
+
+    $total+=$values;
+  }
+}    
+echo $total;
+}
 //getting the categories
 
 function getCats()
@@ -87,8 +133,58 @@ function getCats()
     $cat_id = $row_cats['cat_id'];
     $cat_title = $row_cats['cat_title'];
 
-    echo "<li><a href='index.php?cat=$cat_id'>$cat_title</a></li>";
+    echo "<a href='index.php?cat=$cat_id'>$cat_title</a>";
 
+  }
+}
+
+function indigetCats()
+{
+  global $con;
+  $get_cats = "select * from categories";
+
+  $run_cats = mysqli_query($con, $get_cats);
+
+  while($row_cats=mysqli_fetch_array($run_cats)){
+    $cat_id = $row_cats['cat_id'];
+    $cat_title = $row_cats['cat_title'];
+    $cat_title = strtoupper($cat_title);
+    echo "
+    <li>
+      <div class='dropdown'>
+        <button class='dropbtn'>
+        <a href='#?cat=$cat_id' style='text-decoration: none; color: black; margin-left: 10px;'>$cat_title</a>
+        </button>
+        <div class='dropdown-content'>
+        ";
+        $get_cat_pro = "select * from products where product_cat='$cat_id'";
+        $run_cat_pro = mysqli_query($con, $get_cat_pro);
+        $count_cats = mysqli_num_rows($run_cat_pro);
+        if($count_cats==0){
+              echo"<a href='#'>There is no product in this category!</a>";
+        }
+         $a=[];
+   
+        while($row_cat_pro=mysqli_fetch_array($run_cat_pro)){
+          $pro_brand = $row_cat_pro['product_brand'];
+          $get_brand = "select brand_title from brands where brand_id='$pro_brand'";
+
+          $run_brands = mysqli_query($con, $get_brand);
+          while($row_brands=mysqli_fetch_array($run_brands)){
+            $brand_name = $row_brands['brand_title'];
+              if(in_array($brand_name, $a)==False)
+              {
+                echo "<a href='index.php?cat=$cat_id&brand=$pro_brand'>$brand_name</a>";
+                array_push($a, $brand_name);  
+              }
+              
+            }
+          } 
+      "
+          </div>
+        </div>
+      </li>
+      ";
   }
 }
 
@@ -128,15 +224,24 @@ function getPro()
         $pro_title = $row_pro['product_title'];
         $pro_price = $row_pro['product_price'];
         $pro_image = $row_pro['product_image'];
-
-         echo "
+        
+        $ip = getIp();
+        $check_pro = "select * from cart where ip_add='$ip' AND p_id='$pro_id'";
+        $run_check = mysqli_query($con, $check_pro);
+        
+      echo "
             <div id='single_product'>
               <h3>$pro_title</h3>
-              <img src='admin_area/product_images/$pro_image' width='180' height='180' />
+              <img src='admin_area/product_images/$pro_image' width='300' height='300' />
               <h3>₹ $pro_price</h3>
-              <a href='details.php?pro_id=$pro_id' style='float:left;'>Details</a>
-              <a href='index.php?add_cart=$pro_id'><button style='float: right'>Add to Cart</button></a>
-              </div>
+              <a href='details.php?add_cart=$pro_id' style='float:left;'>Details</a>
+              <a href='index.php?add_cart=$pro_id&cond=yes'>
+              <button type='button' class='btn'>
+          <span class='glyphicon glyphicon-shopping-cart'></span> Add to Cart
+        </button>
+        </a>
+      </div>
+     
          ";
       }
  }
@@ -148,10 +253,10 @@ function getCatPro()
   if(isset($_GET['cat']))
   {
     $cat_id = $_GET['cat'];
-
+    $pro_brand = $_GET['brand'];
   global $con;
 
-  $get_cat_pro = "select * from products where product_cat='$cat_id'";
+  $get_cat_pro = "select * from products where product_cat='$cat_id' and product_brand='$pro_brand'";
 
   $run_cat_pro = mysqli_query($con, $get_cat_pro);
 
@@ -178,8 +283,12 @@ function getCatPro()
           <h3>$pro_title</h3>
           <img src='admin_area/product_images/$pro_image' width='180' height='180' />
           <h3>₹ $pro_price</h3>
-          <a href='details.php?pro_id=$pro_id' style='float:left;'>Details</a>
-          <a href='index.php?add_cart=$pro_id'><button style='float: right'>Add to Cart</button></a>
+          <a href='details.php?add_cart=$pro_id' style='float:left;'>Details</a>
+          <a href='index.php?add_cart=$pro_id&cond=yes'>
+              <button type='button' class='btn'>
+          <span class='glyphicon glyphicon-shopping-cart'></span> Add to Cart
+        </button>
+        </a>
           </div>
      ";
 
@@ -222,11 +331,17 @@ function getBrandPro()
           <img src='admin_area/product_images/$pro_image' width='180' height='180' />
           <h3>₹ $pro_price</h3>
           <a href='details.php?pro_id=$pro_id' style='float:left;'>Details</a>
-          <a href='index.php?add_cart=$pro_id'><button style='float: right'>Add to Cart</button></a>
-
+          <a href='index.php?add_cart=$pro_id'>
+              <button type='button' class='btn'>
+          <span class='glyphicon glyphicon-shopping-cart'></span> Add to Cart
+        </button>
+        </a>
           </div>
      ";
 
 }
 }
 }
+?>
+</body>
+</html>
