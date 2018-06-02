@@ -1,8 +1,5 @@
-body{
-  overflow: hidden;
-}
 .header{
-  width: 1250px;
+  width: 1370px;
   height: 10px;
   color: black;
   margin-top: 10px;
@@ -30,7 +27,7 @@ body{
 }
 
 .menubar{
-  width: 1250px;
+  width: 1370px;
   height: 10px;
   color: black;
   margin-top: 10px;
@@ -55,7 +52,7 @@ a:hover{
 }
 
 .header_wrapper{
-  width: 1250px;
+  width: 1370px;
   height: 335px;
   margin-top: auto;
   background: black;
@@ -93,7 +90,7 @@ a:hover{
 }
 
 #footer{
-  width: 1250px;
+  width: 1370px;
   height: 300px;
   background: gray;
   clear: both;

@@ -24,7 +24,7 @@
           <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
           <li>
           <a href="cart.php">
-          <span class="glyphicon glyphicon-shopping-cart" style="margin-right: 80px;margin-left: -15px;"><?php total_items(); ?></span>
+          <span class="glyphicon glyphicon-shopping-cart" ><?php total_items(); ?></span>
           </a>
       </li>
         </ul>
