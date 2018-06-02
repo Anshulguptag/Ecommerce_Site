@@ -21,14 +21,14 @@
           <li><a href="custmor/my_account.php">MAIL</a></li>
           <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
           <a href="#">
-          <span class="glyphicon glyphicon-shopping-cart"><?php total_items(); ?></span>
+          <span class="glyphicon glyphicon-shopping-cart" style="margin-right: 80px;margin-left: -15px;"><?php total_items(); ?></span>
           </a>
         </ul>
 <hr>
 <h1 id="logo">fullcart.com</h1>
 <div id="form">
           <form method="get" action="results.php" enctype="multipart/form-data">
-            <input type="text" name="user_query" placeholder="Search a product" style="float: right; margin-right: 10px;"/>
+            <input type="text" name="user_query" placeholder="Search a product" style="float: right; margin-right: 90px;"/>
             <input type="submit" name="search" value="search" style="float: right; margin-right: 5px; margin-left: -300px;"/>
           </form>
       </div>      
