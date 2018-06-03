@@ -40,7 +40,11 @@ function cart($request,$cond)
       global $con;
        $pro_id = $_GET['add_cart'];
        $ip = getIp();
-       $check_pro = "select * from cart where ip_add='$ip' AND p_id='$pro_id'";
+       $check_prod = "select * from products where product_id='$pro_id'";
+       $run_check1 = mysqli_query($con, $check_prod);
+       if(mysqli_num_rows($run_check1)>0)
+       {
+        $check_pro = "select * from cart where ip_add='$ip' AND p_id='$pro_id'";
        $run_check = mysqli_query($con, $check_pro);
        if(mysqli_num_rows($run_check)>0){
          $check_qty =  "select qty from cart where ip_add='$ip' AND p_id='$pro_id'";
@@ -64,6 +68,9 @@ function cart($request,$cond)
             echo"<script>window.open('$request.php?add_cart=$pro_id&cond=No','_self')</script>";
           }
         }
+        
+       } 
+       
     }
   }
 }
