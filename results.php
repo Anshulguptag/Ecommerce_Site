@@ -19,21 +19,31 @@
   <div class="header">
         <ul id="head">  
           <li><a href="index.php">JOIN</a></li>
-          <li><a href="all_products.php">SIGNIN</a></li>
           <li><a href="custmor/my_account.php">MAIL</a></li>
           <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
           <li>
           <a href="cart.php">
-          <span class="glyphicon glyphicon-shopping-cart" style="margin-right: 80px;margin-left: -15px;"><?php total_items(); ?></span>
+           <span class="glyphicon glyphicon-shopping-cart" style="margin-right: -20px; margin-left: -10px;"><?php total_items(); ?></span>
           </a>
       </li>
+      <li>
+        <?php
+        if(!isset($_SESSION['customer_email'])){
+          echo "<a href='checkout.php'>LOGIN</a>";
+        }
+        else{
+         echo "<a href='Logout.php'>LOGOUT</a>"; 
+        }
+        ?>
+       </li> 
+      
         </ul>
 <hr>
 <h1 id="logo">fullcart.com</h1>
 <div id="form">
           <form method="get" action="results.php" enctype="multipart/form-data">
-            <input type="text" name="user_query" placeholder="Search a product" style="float: right; margin-right: 90px;"/>
-            <input type="submit" name="search" value="search" style="float: right; margin-right: 5px; margin-left: -300px;"/>
+            <input type="text" name="user_query" placeholder="Search a product" style="float: right; margin-top: 9px;"/>
+            <input type="submit" name="search" value="search" style="float: right; margin-right: 5px; margin-top: 9px;"/>
           </form>
       </div>      
   <div class="menubar">

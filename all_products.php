@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<?php include("functions/functions.php") ?>
+<?php 
+session_start();
+include("functions/functions.php") ?>
 <html lang="en" dir="ltr">
 <head>
   <title>fullcart</title>
@@ -17,19 +19,29 @@
   <div class="header">
         <ul id="head">  
           <li><a href="index.php">JOIN</a></li>
-          <li><a href="all_products.php">SIGNIN</a></li>
           <li><a href="custmor/my_account.php">MAIL</a></li>
           <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
           <a href="cart.php">
-          <span class="glyphicon glyphicon-shopping-cart" style="margin-right: 80px;margin-left: -15px;"><?php total_items(); ?></span>
+          <span class="glyphicon glyphicon-shopping-cart" style="margin-right: -20px; margin-left: -10px;"><?php total_items(); ?></span>
           </a>
+          <li>
+          <?php
+          if(!isset($_SESSION['customer_email'])){
+            echo "<a href='checkout.php'>LOGIN</a>";
+          }
+          else{
+           echo "<a href='Logout.php'>LOGOUT</a>"; 
+          }
+          ?>
+         </li> 
+        
         </ul>
 <hr>
 <h1 id="logo">fullcart.com</h1>
 <div id="form">
           <form method="get" action="results.php" enctype="multipart/form-data">
-            <input type="text" name="user_query" placeholder="Search a product" style="float: right; margin-right: 90px;"/>
-            <input type="submit" name="search" value="search" style="float: right; margin-right: 5px; margin-left: -300px;"/>
+            <input type="text" name="user_query" placeholder="Search a product" style="float: right; margin-top: 9px;"/>
+            <input type="submit" name="search" value="search" style="float: right; margin-right: 5px; margin-top: 9px;"/>
           </form>
       </div>      
   <div class="menubar">
@@ -89,15 +101,15 @@
      }
       ?>    
        <div id="footer">
-        <h2 style="text-align: center; padding-top: 30px; font-size:20px; ">FOLLOW US ON</h2>
+        <h2 style="text-align: center; padding-top: 30px; font-size:20px; color: #FFF;">FOLLOW US ON</h2>
         <a href="#" class="fa fa-facebook"></a>
         <a href="#" class="fa fa-twitter"></a>
         <a href="#" class="fa fa-google"></a>
     <a href="#" class="fa fa-linkedin"></a>
     <a href="#" class="fa fa-instagram"></a>
     
-    <h2 style="text-align: center; padding-top: 30px; font-size:20px; ">&copy; 2018 fullcart</h2>
-    <h4 style="text-align: center; font-size:20px; ">fullcart.com</h4>
+    <h2 style="text-align: center; padding-top: 30px; font-size:20px; color: #FFF;">&copy; 2018 fullcart</h2>
+    <h4 style="text-align: center; font-size:20px; color: #FFF;">fullcart.com</h4>
         
       </div>
 </body>

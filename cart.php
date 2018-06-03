@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<?php include("functions/functions.php") ?>
+<?php include("functions/functions.php");
+session_start();
+ ?>
 <html lang="en" dir="ltr">
 <head>
 
@@ -26,28 +28,114 @@
       text-align: center;
       font-size: 18px;
   }
+  .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+  .button1 {
+      background-color: white; 
+      color: black; 
+      border: 2px solid #4CAF50;
+    }
+
+  .button1:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  #a1{
+    text-decoration: none;
+    color: black;    
+  }
+
+  #a1:hover{
+    color: white;
+  }
+
+  #submit1{
+    margin-top: 15px; 
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+  }
+
+  #submit1:hover{
+    background-color: #008CBA;
+    color: white;
+  }
+  #submit2{
+    margin-top: 15px; 
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white; 
+    color: black; 
+    border: 2px solid #f44336;
+  }
+  
+  #submit2:hover{
+    background-color: #f44336;
+    color: white;
+  }
   </style>
 </head>
 <body>
   <div class="header">
         <ul id="head">  
           <li><a href="index.php">JOIN</a></li>
-          <li><a href="all_products.php">SIGNIN</a></li>
           <li><a href="custmor/my_account.php">MAIL</a></li>
           <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
           <li>
           <a href="cart.php">
-          <span class="glyphicon glyphicon-shopping-cart" style="margin-right: 80px;margin-left: -15px;"><?php total_items(); ?></span>
+          <span class="glyphicon glyphicon-shopping-cart" style="margin-right: -20px; margin-left: -10px;"><?php total_items(); ?></span>
           </a>
           </li>
+          <li>
+        <?php
+        if(!isset($_SESSION['customer_email'])){
+          echo "<a href='checkout.php'>LOGIN</a>";
+        }
+        else{
+         echo "<a href='Logout.php'>LOGOUT</a>"; 
+        }
+        ?>
+       </li> 
+      
         </ul>
     
     <hr>
     <h1 id="logo">fullcart.com</h1>
     <div id="form">
           <form method="get" action="results.php" enctype="multipart/form-data">
-            <input type="text" name="user_query" placeholder="Search a product" style="float: right; margin-right: 90px;"/>
-            <input type="submit" name="search" value="search" style="float: right; margin-right: 5px; margin-left: -300px;"/>
+            <input type="text" name="user_query" placeholder="Search a product" style="float: right; margin-top: 9px;"/>
+            <input type="submit" name="search" value="search" style="float: right; margin-right: 5px; margin-top: 9px;"/>
           </form>
     </div>      
     <div class="menubar">
@@ -67,73 +155,117 @@
       
         </ul>
     </div>
+
     <br>
     <div class="header_wrapper">
         <img id="banner" src="images/advertisement.gif"/>
     </div> 
-      <center><h2 style="font-size: 50px; font-family: 'Poiret One', cursive; border-bottom: 1px solid black;">
+    <center><h2 style="font-size: 50px; font-family: 'Poiret One', cursive; border-bottom: 1px solid black;">
           <span class="glyphicon glyphicon-shopping-cart" style="margin-right: 10px;"></span>
           Your cart items</h2></center>
-    
-    <?php 
-    global $con;
-    $ip = getIp();
-    $get_pro = "select * from cart where ip_add='$ip'";
-    $run_pro = mysqli_query($con, $get_pro);    
-      while($row_pro=mysqli_fetch_array($run_pro)){
-        $product_id = $row_pro['p_id'];
-        $quantity = $row_pro['qty'];
-        $get_prod = "select * from products where product_id='$product_id'";
-        $run_pro1 = mysqli_query($con, $get_prod);
-        while($pro_row=mysqli_fetch_array($run_pro1))
-          {
-            
-            $pro_id = $pro_row['product_id'];
-            $pro_cat = $pro_row['product_cat'];
-            $pro_brand = $pro_row['product_brand'];
-            $pro_title = $pro_row['product_title'];
-            $pro_price = $pro_row['product_price'];
-            $pro_image = $pro_row['product_image'];
-            $net_price = $quantity*$pro_price;
-            echo "
-            <div id='single_product'>
-              <h3>$pro_title</h3>
-              <img src='admin_area/product_images/$pro_image' width='300' height='300' />
-              <h3 >₹ $net_price</h3>
-              <!--<h3 style='text-align: center;'><span style='background-color: green; padding: 10px; color: white; text-align: center;'>+</span><span style='padding: 20px;'>$quantity</span><span style='background-color: red; padding: 11px; color: white; text-align: center;'>-</span></h3>-->
-              <center><input id='items' type='number' value='$quantity' min='0' max='6'></center>
+          <form action="" method="post" enctype="multipart/form-data">
+            <table align="center" width="700" >
+              <tr align="center">
+                <th><center><h3> Product(s)</h3></center></th>
+                <th><center><h3>Quantity</h3></center></th>
+                <th><center><h3>Total Price</h3></center></th>
+              </tr>
+              <?php 
+                $total=0;
+                  global $con;
+                  $ip = getIp();
+                  $sel_price = "select * from cart where ip_add='$ip'";
+                  $run_price = mysqli_query($con, $sel_price);
+                  if(mysqli_num_rows($run_price)>0)
+                  {
+                    $prod_id = array();
+                  
+                    while($p_price=mysqli_fetch_array($run_price))
+                    {
+                      $pro_id = $p_price['p_id'];
+                      array_push($prod_id, $pro_id);
+                      $qty = $p_price['qty'];
+                      $pro_price = "select * from products where product_id='$pro_id'";
+                      $run_pro_price = mysqli_query($con, $pro_price);
 
-            </div>
-            ";
+                      while($pp_price = mysqli_fetch_array($run_pro_price))
+                      {
+                        $product_price = array($pp_price['product_price']*$qty);
+                        $product_title = $pp_price['product_title'];
+                        $product_image = $pp_price['product_image'];
+                        $single_price = $pp_price['product_price'];
+                        $values = array_sum($product_price);
+                        $total+=$values;
+                 
+               ?>     
+              <tr align="center">
+
+                <td><u><?php echo $product_title; ?></u><br>
+                <img src="admin_area/product_images/<?php echo $product_image;?>" width="60" height="60"/>
+                </td>
+                <td><input type="number" name="quantity[]" value="<?php echo $qty ?>" min="0" max="6" /></td>
+                <td><span style="font-size: 21px;">₹<?php echo $qty*$single_price ?></span></td>
+              </tr>
+              <?php
+                  }
+                  }  
+              ?> 
+              <tr align="center">
+                <td><input type="submit" name="update_cart" value="Update cart" id="submit2"/></td>
+                <td><input type="submit" name="continue" value="Continue Shopping" id="submit1"/></td>
+                <td><button class="button button1"><a href="checkout.php" id="a1">Checkout</a></button>   
+            </table>
+          </form> 
+      <?php 
           
+          $ip = getIp();
+          $array_values = array_values($prod_id);
+          if(isset($_POST['update_cart']))
+          {
+            $i=0;
+            foreach($_POST['quantity'] as $quantity){
+                if($quantity!=0)
+                {  
+                $update_quant = "update cart set qty = '$quantity' where ip_add='$ip' AND p_id='$prod_id[$i]'";
+                mysqli_query($con, $update_quant);
+                }
+                else
+                {
+                  $update_quant = "delete from cart where ip_add='$ip' AND p_id='$prod_id[$i]'";
+                  mysqli_query($con, $update_quant);
+                
+                }
+                $i =$i+1;
+                
+              }
+            echo "<script>window.open('cart.php','_self')</script>";  
           }
-        }
+          if(isset($_POST['continue']))
+          {
+            echo "<script>window.open('index.php','_self')</script>";
+          }
+          
+      }
+          else{
       ?>
+      <center><h2 style="font-size: px; font-family: 'Poiret One', cursive; ">No item is present :'(</h2></center>
+      <?php
+               }
+      ?>         
+    
+    
       <div id="footer">
-        <h2 style="text-align: center; padding-top: 30px; font-size:20px; ">FOLLOW US ON</h2>
+        <h2 style="text-align: center; padding-top: 30px; font-size:20px; color: #FFF;">FOLLOW US ON</h2>
         <a href="https://www.facebook.com/anshul.gupta.9480111" class="fa fa-facebook"></a>
         <a href="#" class="fa fa-twitter"></a>
         <a href="#" class="fa fa-google"></a>
         <a href="#" class="fa fa-linkedin"></a>
         <a href="https://www.instagram.com/i_am_a_gupta.97/?hl=en" class="fa fa-instagram"></a>
     
-        <h2 style="text-align: center; padding-top: 30px; font-size:20px; ">&copy; 2018 fullcart</h2>
-        <h4 style="text-align: center; font-size:20px; ">fullcart.com</h4>
+        <h2 style="text-align: center; padding-top: 30px; font-size:20px; color: #FFF;">&copy; 2018 fullcart</h2>
+        <h4 style="text-align: center; font-size:20px; color: #FFF;">fullcart.com</h4>
         
-      </div>
-      <script>
-        document.getElementById('items').onkeypress =
-          function (e) {
-            var ev = e || window.event;
-            if(ev.charCode < 48 || ev.charCode > 57) {
-              return false; // not a digit
-            } else if(this.value * 10 + ev.charCode - 48 > this.max) {
-               return false;
-            } else {
-               return true;
-            }
-          }
-      </script>     
+      </div>     
 
 </body>
 </html>
