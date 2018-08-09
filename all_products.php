@@ -18,7 +18,7 @@ include("functions/functions.php") ?>
 <body>
   <div class="header">
         <ul id="head">  
-          <li><a href="index.php">JOIN</a></li>
+          <li><a href="regester.php">JOIN</a></li>
           <li><a href="custmor/my_account.php">MAIL</a></li>
           <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
           <a href="cart.php">
@@ -27,7 +27,7 @@ include("functions/functions.php") ?>
           <li>
           <?php
           if(!isset($_SESSION['customer_email'])){
-            echo "<a href='checkout.php'>LOGIN</a>";
+            echo "<a href='login_connection.php'>LOGIN</a>";
           }
           else{
            echo "<a href='Logout.php'>LOGOUT</a>"; 

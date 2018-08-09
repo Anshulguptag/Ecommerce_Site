@@ -100,7 +100,6 @@ function total_items(){
     
     }
     echo $total_items;
-
 }
 
 function total_price(){
@@ -125,6 +124,7 @@ while($p_price=mysqli_fetch_array($run_price))
   }
 }    
 echo $total;
+$_SESSION['total_amount'] = $total;    
 }
 //getting the categories
 

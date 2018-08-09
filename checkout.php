@@ -1,7 +1,7 @@
-<!DOCTYPE html>
 <?php 
 session_start();
 include("functions/functions.php") ?>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
 
@@ -20,7 +20,7 @@ include("functions/functions.php") ?>
 <body>
   <div class="header">
         <ul id="head">  
-          <li><a href="index.php">JOIN</a></li>
+          <li><a href="regester.php">JOIN</a></li>
           <li><a href="custmor/my_account.php">MAIL</a></li>
           <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
           <li>
@@ -31,7 +31,7 @@ include("functions/functions.php") ?>
       <li>
         <?php
         if(!isset($_SESSION['customer_email'])){
-          echo "<a href='checkout.php'>LOGIN</a>";
+          echo "<a href='login_connection.php'>LOGIN</a>";
         }
         else{
          echo "<a href='Logout.php'>LOGOUT</a>"; 
@@ -51,12 +51,12 @@ include("functions/functions.php") ?>
   <div class="menubar">
     
     <ul id="menu">
-      <li><div class="dropdown" style="margin-left: 150px;">
+      <li><div class="dropdown" id="home">
         <button class="dropbtn"><a href="index.php" style="text-decoration: none; color:black;" >HOME</a></button>
         
       </div>
       </li>
-      <li><div class="dropdown" style="margin-left: 15px;">
+      <li><div class="dropdown" id="all">
         <button class="dropbtn"><a href="all_products.php" style="text-decoration: none; color:black;">ALL</a></button>
         <div class="dropdown-content">
           <!--<?php getCats(); ?>-->
@@ -72,16 +72,14 @@ include("functions/functions.php") ?>
         <img id="banner" src="images/advertisement.gif"/>
      </div>
     <?php 
-    
      if(!isset($_SESSION['customer_email']))
      {
         include("customer_login.php"); 
      }
      else
-     {  
+     { 
         include("payment.php");
      }
-     
      ?>
  
      <div id="footer">
@@ -96,5 +94,6 @@ include("functions/functions.php") ?>
     <h4 style="text-align: center; font-size:20px; color: #FFF;">fullcart.com</h4>
         
       </div>
+    </div>  
 </body>
 </html>

@@ -67,13 +67,9 @@ span.psw {
 }
 
 /* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-    span.psw {
-       display: block;
-       float: none;
-    }
-    .cancelbtn {
-       width: 100%;
+@media screen and (max-width: 475px) {
+    .imgcontainer{
+        margin-left: -350px;
     }
 }
 </style>
@@ -102,7 +98,7 @@ span.psw {
 
   <div class="container" style="background-color:#f1f1f1">
     <a href="customer_regester.php" style="text-decoration: none;"><span id="new_reg">New? Register Here</span></a>
-    <span class="psw">Forgot <a href="checkout.php?forgot_pass">password?</a></span>
+    <span class="psw">Forgot <a href="forgotPassword.php">password?</a></span>
   </div>
 </form>
 

@@ -108,6 +108,7 @@ include("includes/db.php");
     $product_keywords = $_POST['product_keywords'];
 
     $product_image = $_FILES['product_image']['name'];
+    
     $product_image_tmp = $_FILES['product_image']['tmp_name'];
 
     move_uploaded_file($product_image_tmp,"product_images/$product_image");

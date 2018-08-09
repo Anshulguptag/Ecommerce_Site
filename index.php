@@ -1,11 +1,13 @@
-<!DOCTYPE html>
 <?php 
 session_start();
-include("functions/functions.php") ?>
+include("functions/functions.php"); 
+?>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
 
   <title>fullcart</title>
+<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">    
   <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
   <link rel="stylesheet" href="styles/style.css" media="all" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -15,12 +17,11 @@ include("functions/functions.php") ?>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Handlee" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 <body>
   <div class="header">
         <ul id="head">  
-          <li><a href="customer_regester.php">JOIN</a></li>
+          <li><a href="regester.php">JOIN</a></li>
           <li><a href="custmor/my_account.php">MAIL</a></li>
           <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
           <li>
@@ -31,7 +32,7 @@ include("functions/functions.php") ?>
       <li>
         <?php
         if(!isset($_SESSION['customer_email'])){
-          echo "<a href='checkout.php'>LOGIN</a>";
+          echo "<a href='login_connection.php'>LOGIN</a>";
         }
         else{
          echo "<a href='Logout.php'>LOGOUT</a>"; 
@@ -51,16 +52,14 @@ include("functions/functions.php") ?>
   <div class="menubar">
     
     <ul id="menu">
-      <li><div class="dropdown" style="margin-left: 150px;">
-        <button class="dropbtn"><a href="index.php" style="text-decoration: none; color:black;" >HOME</a></button>
+      <li><div class="dropdown" id="home">
+        <button class="dropbtn" ><a href="index.php" style="text-decoration: none; color:black;" >HOME</a></button>
         
       </div>
       </li>
-      <li><div class="dropdown" style="margin-left: 15px;">
+      <li><div class="dropdown" id="all">
         <button class="dropbtn"><a href="all_products.php" style="text-decoration: none; color:black;">ALL</a></button>
-        <div class="dropdown-content">
-          <!--<?php getCats(); ?>-->
-        </div>
+        
       </div>
       </li>
       <?php indigetCats(); ?>
@@ -94,3 +93,4 @@ include("functions/functions.php") ?>
       </div>
 </body>
 </html>
+    

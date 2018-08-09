@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2018 at 11:07 AM
--- Server version: 5.7.21-log
+-- Generation Time: Jun 20, 2018 at 09:35 AM
+-- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -21,6 +21,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `ecommerce`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank`
+--
+
+CREATE TABLE `bank` (
+  `acc_no` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `card_no` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `amount` int(100) NOT NULL,
+  `cvv` int(10) NOT NULL,
+  `expirey_date` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(11) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `bank`
+--
+
+INSERT INTO `bank` (`acc_no`, `card_no`, `amount`, `cvv`, `expirey_date`, `password`) VALUES
+('300831788', '4192706058751583', 100000, 128, '20.06.2023', 'Anshul@13');
 
 -- --------------------------------------------------------
 
@@ -67,13 +89,12 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`p_id`, `ip_add`, `qty`) VALUES
-(5, '::1', 6),
-(11, '::1', 6),
-(30, '::1', 6),
-(26, '::1', 6),
-(27, '::1', 6),
-(23, '::1', 6),
-(34, '::1', 1);
+(30, '::1', 5),
+(27, '::1', 1),
+(13, '192.168.0.100', 1),
+(14, '192.168.0.100', 1),
+(30, '192.168.0.100', 1),
+(24, '192.168.0.100', 1);
 
 -- --------------------------------------------------------
 
@@ -112,7 +133,6 @@ CREATE TABLE `customers` (
   `customer_country` text NOT NULL,
   `customer_city` text NOT NULL,
   `customer_contact` varchar(255) NOT NULL,
-  `customer_image` text NOT NULL,
   `customer_addr` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -120,9 +140,8 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`customer_id`, `customer_ip`, `customer_name`, `customer_email`, `customer_pass`, `customer_country`, `customer_city`, `customer_contact`, `customer_image`, `customer_addr`) VALUES
-(1, '::1', 'Anshul', 'ganshul917@gmail.com', 'Anshul@13', 'India', 'Delhi', '9650576346', 'profile.jpg', ''),
-(2, '::1', 'Anshul Gupta', 'ganshul917@gmail.com', 'Anshul@13', 'India', 'Delhi', '9650576346', 'profile.jpg', '');
+INSERT INTO `customers` (`customer_id`, `customer_ip`, `customer_name`, `customer_email`, `customer_pass`, `customer_country`, `customer_city`, `customer_contact`, `customer_addr`) VALUES
+(1, '::1', 'Anshul Gupta', 'ganshul917@gmail.com', 'Anshul@13', 'India', 'Delhi', '9650576346', '8B Shyam Colony Budh Vihar\r\nAbhi');
 
 -- --------------------------------------------------------
 
@@ -175,6 +194,12 @@ INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_t
 --
 
 --
+-- Indexes for table `bank`
+--
+ALTER TABLE `bank`
+  ADD PRIMARY KEY (`acc_no`,`card_no`,`cvv`);
+
+--
 -- Indexes for table `brands`
 --
 ALTER TABLE `brands`
@@ -206,7 +231,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `customer_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `products`

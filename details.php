@@ -8,24 +8,62 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Handlee" rel="stylesheet">
-  
+<style>
+#highlight
+    {
+        margin-left: 650px; 
+        margin-top: 30px
+    }
+#desc
+    {
+        margin-left: 630px; 
+        margin-top: 50px; 
+        font-size: 150%; 
+        border-style: double; 
+        padding: 10px;
+    }
+
+@media screen and (max-width: 475px)
+{
+    #highlight
+    {
+        margin-left: 170px;
+        margin-top: 500px;
+    }
+    #desc
+    {
+        margin-left: 0px; 
+        margin-top: 50px; 
+        font-size: 150%; 
+        border-style: double; 
+        padding: 10px;
+    }
+    img
+    {
+      height: 300px;   
+      width: 280px;
+    }
+
+}
+</style>
 </head>
 <body>
   <div class="header">
         <ul id="head">  
-          <li><a href="index.php">JOIN</a></li>
+          <li><a href="regester.php">JOIN</a></li>
           <li><a href="custmor/my_account.php">MAIL</a></li>
           <li><a href="#">TOTAL PRICE: ₹ <?php total_price(); ?></a></li>
-          <li><a href="#">
+          <li><a href="cart.php">
           <span class="glyphicon glyphicon-shopping-cart" ><?php total_items(); ?></span>
           </a></li>
           <li>
         <?php
         if(!isset($_SESSION['customer_email'])){
-          echo "<a href='checkout.php'>LOGIN</a>";
+          echo "<a href='login_connection.php'>LOGIN</a>";
         }
         else{
          echo "<a href='Logout.php'>LOGOUT</a>"; 
@@ -90,6 +128,8 @@
                           <span class='glyphicon glyphicon-shopping-cart'></span> Add to Cart
                           </button></a>
                         </div>
+                        <h3 id='highlight'><u>Highlights</u></h3>
+                        <h3 id='desc'>$pro_desc</h3>
                      ";
                   }
                 }
